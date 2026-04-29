@@ -1,0 +1,47 @@
+---
+description: Use type instead of interface for all type definitions
+globs: **/*.ts,**/*.tsx
+alwaysApply: true
+---
+
+# TypeScript: Use `type` instead of `interface`
+
+Always use `type` for type definitions, not `interface`. This provides consistency and flexibility across the codebase.
+
+## Rule
+
+- Use `type` for all type definitions (props, data models, etc.)
+- Do not use `interface` unless there's an explicit need for declaration merging
+- This applies to all TypeScript files across the project
+
+## Examples
+
+```typescript
+// ❌ BAD
+interface EventCardProps {
+  event: Event;
+  onCardClick?: (eventId: string) => void;
+}
+
+// ✅ GOOD
+type EventCardProps = {
+  event: Event;
+  onCardClick?: (eventId: string) => void;
+};
+```
+
+```typescript
+// ❌ BAD
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+// ✅ GOOD
+type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+```

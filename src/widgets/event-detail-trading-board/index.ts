@@ -1,0 +1,1 @@
+export { EventDetailTradingBoard } from "./EventDetailTradingBoard";

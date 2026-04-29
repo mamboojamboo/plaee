@@ -1,0 +1,14 @@
+export const CHANCE_INDICATOR = {
+  R: 29,
+  STROKE: 4.5,
+  CX: 31,
+  BASELINE_Y: 26,
+  WIDTH: 62,
+  HEIGHT: 34,
+  VIEW_BOX: "0 -4 62 38",
+  LAYER_DY: 2,
+  PERCENT_TEXT_Y: 21,
+  LABEL_TEXT_Y: 36,
+} as const;
+
+export const CHANCE_INDICATOR_ARC_LENGTH = Math.PI * CHANCE_INDICATOR.R;
