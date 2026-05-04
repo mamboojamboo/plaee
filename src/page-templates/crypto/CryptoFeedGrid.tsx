@@ -3,7 +3,6 @@
 import { useMemo, type ReactNode } from "react";
 import { useAtomValue } from "jotai";
 
-import type { Event } from "@/src/entities/event";
 import { eventsAtom } from "@/src/entities/event";
 import { useCryptoTypeFilteredEvents } from "@/src/features/crypto-feed";
 import { LoadingSkeleton } from "@/src/shared/ui/loading-skeleton";
@@ -14,18 +13,13 @@ import {
 } from "./constants";
 
 type CryptoFeedGridProps = {
-  initialEvents: Event[];
   cards: Array<{ id: string; node: ReactNode }>;
 };
 
-export const CryptoFeedGrid = ({
-  initialEvents,
-  cards,
-}: CryptoFeedGridProps) => {
-  const hydratedEvents = useAtomValue(eventsAtom);
-  const events = hydratedEvents.length === 0 ? initialEvents : hydratedEvents;
+export const CryptoFeedGrid = ({ cards }: CryptoFeedGridProps) => {
+  const events = useAtomValue(eventsAtom);
   const typeFilteredEvents = useCryptoTypeFilteredEvents(events);
-  const isLoading = initialEvents.length === 0;
+  const isLoading = events.length === 0;
 
   const cardsById = useMemo(() => {
     const m = new Map<string, ReactNode>();

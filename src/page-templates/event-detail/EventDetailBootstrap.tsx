@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
-import { useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
+import { useState, type ReactNode } from "react";
+import { createStore, Provider } from "jotai";
 
 import {
   type Event,
@@ -16,28 +15,29 @@ type EventDetailBootstrapProps = {
   children: ReactNode;
 };
 
+const EventDetailLivePriceUpdates = () => {
+  usePriceUpdates();
+
+  return null;
+};
+
 export const EventDetailBootstrap = ({
   initialEvent,
   children,
 }: EventDetailBootstrapProps) => {
-  const hydratedEvents: Event[] = [initialEvent];
+  const [store] = useState(() => {
+    const nextStore = createStore();
 
-  useHydrateAtoms(
-    [
-      [eventsAtom, hydratedEvents],
-      [isLoadingAtom, false],
-    ] as const,
+    nextStore.set(eventsAtom, [initialEvent]);
+    nextStore.set(isLoadingAtom, false);
+
+    return nextStore;
+  });
+
+  return (
+    <Provider store={store}>
+      <EventDetailLivePriceUpdates />
+      {children}
+    </Provider>
   );
-
-  const setEvents = useSetAtom(eventsAtom);
-  const setIsLoading = useSetAtom(isLoadingAtom);
-
-  useEffect(() => {
-    setEvents([initialEvent]);
-    setIsLoading(false);
-  }, [initialEvent, setEvents, setIsLoading]);
-
-  usePriceUpdates();
-
-  return <>{children}</>;
 };

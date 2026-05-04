@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useSetAtom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
+import { useState, type ReactNode } from "react";
+import { createStore, Provider } from "jotai";
 
 import type { Event } from "@/src/entities/event";
 import { eventsAtom } from "@/src/entities/event";
@@ -12,6 +11,7 @@ import {
   cryptoCountsAtom,
   cryptoEventsAtom,
   cryptoSubSlugAtom,
+  cryptoTypeChipAtom,
 } from "@/src/features/crypto-feed";
 
 type CryptoFeedBootstrapProps = {
@@ -19,6 +19,13 @@ type CryptoFeedBootstrapProps = {
   initialCounts: Record<string, number>;
   initialAllCount: number;
   subSlug: string | null;
+  children: ReactNode;
+};
+
+const CryptoFeedLivePriceUpdates = () => {
+  usePriceUpdates();
+
+  return null;
 };
 
 export const CryptoFeedBootstrap = ({
@@ -26,42 +33,25 @@ export const CryptoFeedBootstrap = ({
   initialCounts,
   initialAllCount,
   subSlug,
+  children,
 }: CryptoFeedBootstrapProps) => {
-  useHydrateAtoms(
-    [
-      [cryptoEventsAtom, initialEvents],
-      [cryptoSubSlugAtom, subSlug],
-      [cryptoCountsAtom, initialCounts],
-      [cryptoAllCountAtom, initialAllCount],
-      [eventsAtom, initialEvents],
-    ] as const,
+  const [store] = useState(() => {
+    const nextStore = createStore();
+
+    nextStore.set(cryptoEventsAtom, initialEvents);
+    nextStore.set(cryptoSubSlugAtom, subSlug);
+    nextStore.set(cryptoCountsAtom, initialCounts);
+    nextStore.set(cryptoAllCountAtom, initialAllCount);
+    nextStore.set(cryptoTypeChipAtom, null);
+    nextStore.set(eventsAtom, initialEvents);
+
+    return nextStore;
+  });
+
+  return (
+    <Provider store={store}>
+      <CryptoFeedLivePriceUpdates />
+      {children}
+    </Provider>
   );
-
-  const setCryptoEvents = useSetAtom(cryptoEventsAtom);
-  const setCryptoSubSlug = useSetAtom(cryptoSubSlugAtom);
-  const setCryptoCounts = useSetAtom(cryptoCountsAtom);
-  const setCryptoAllCount = useSetAtom(cryptoAllCountAtom);
-  const setEvents = useSetAtom(eventsAtom);
-
-  useEffect(() => {
-    setCryptoEvents(initialEvents);
-    setCryptoSubSlug(subSlug);
-    setCryptoCounts(initialCounts);
-    setCryptoAllCount(initialAllCount);
-    setEvents(initialEvents);
-  }, [
-    initialEvents,
-    initialCounts,
-    initialAllCount,
-    subSlug,
-    setCryptoEvents,
-    setCryptoSubSlug,
-    setCryptoCounts,
-    setCryptoAllCount,
-    setEvents,
-  ]);
-
-  usePriceUpdates();
-
-  return null;
 };

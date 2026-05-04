@@ -27,44 +27,46 @@ export const CryptoPage = ({
 }: CryptoPageProps) => {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr]">
+      {sidebar}
+
       <CryptoFeedBootstrap
+        key={subSlug ?? "all"}
         initialEvents={initialEvents}
         initialCounts={initialCounts}
         initialAllCount={initialAllCount}
         subSlug={subSlug}
-      />
-      {sidebar}
+      >
+        <div className="flex min-w-0 flex-col gap-4">
+          <header className="grid grid-cols-[1fr_auto] gap-x-2 gap-y-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-x-2">
+            <div className="col-start-1 row-start-1 min-w-0 shrink-0">
+              <h2 className="min-w-0 text-xl font-semibold tracking-tight text-foreground">
+                {CRYPTO_INTL.TITLE}
+              </h2>
+            </div>
+            <div className="col-span-2 row-start-2 min-w-0 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+              <CryptoTypeChips chips={CRYPTO_TYPE_CHIP_DEFS} />
+            </div>
+            <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-0.5 self-center lg:col-start-3">
+              <IconDisplay
+                name="search"
+                shape="square"
+                size="md"
+                aria-label={CRYPTO_INTL.ARIA_SEARCH}
+                iconColor="white"
+              />
+              <IconDisplay
+                name="sliders"
+                shape="square"
+                size="md"
+                aria-label={CRYPTO_INTL.ARIA_FILTERS}
+                iconColor="white"
+              />
+            </div>
+          </header>
 
-      <div className="flex min-w-0 flex-col gap-4">
-        <header className="grid grid-cols-[1fr_auto] gap-x-2 gap-y-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-x-2">
-          <div className="col-start-1 row-start-1 min-w-0 shrink-0">
-            <h2 className="min-w-0 text-xl font-semibold tracking-tight text-foreground">
-              {CRYPTO_INTL.TITLE}
-            </h2>
-          </div>
-          <div className="col-span-2 row-start-2 min-w-0 lg:col-span-1 lg:col-start-2 lg:row-start-1">
-            <CryptoTypeChips chips={CRYPTO_TYPE_CHIP_DEFS} />
-          </div>
-          <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-0.5 self-center lg:col-start-3">
-            <IconDisplay
-              name="search"
-              shape="square"
-              size="md"
-              aria-label={CRYPTO_INTL.ARIA_SEARCH}
-              iconColor="white"
-            />
-            <IconDisplay
-              name="sliders"
-              shape="square"
-              size="md"
-              aria-label={CRYPTO_INTL.ARIA_FILTERS}
-              iconColor="white"
-            />
-          </div>
-        </header>
-
-        <CryptoFeedGrid initialEvents={initialEvents} cards={cards} />
-      </div>
+          <CryptoFeedGrid cards={cards} />
+        </div>
+      </CryptoFeedBootstrap>
     </div>
   );
 };

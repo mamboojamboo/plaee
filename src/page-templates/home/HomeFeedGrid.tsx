@@ -3,32 +3,21 @@
 import { useMemo, type ReactNode } from "react";
 import { useAtomValue } from "jotai";
 
-import type { Event } from "@/src/entities/event";
 import {
   filteredEventsAtom,
-  selectedTagIdAtom,
 } from "@/src/features/event-filter";
+import { isLoadingAtom } from "@/src/entities/event";
 import { LoadingSkeleton } from "@/src/shared/ui/loading-skeleton";
 
 import { HOME_VISIBLE_EVENT_CARDS, INTL } from "./constants";
 
 type HomeFeedGridProps = {
-  initialEvents: Event[];
   cards: Array<{ id: string; node: ReactNode }>;
 };
 
-export const HomeFeedGrid = ({
-  initialEvents,
-  cards,
-}: HomeFeedGridProps) => {
+export const HomeFeedGrid = ({ cards }: HomeFeedGridProps) => {
   const filteredEvents = useAtomValue(filteredEventsAtom);
-  const selectedTagId = useAtomValue(selectedTagIdAtom);
-  const isLoading = initialEvents.length === 0;
-
-  const effectiveEvents =
-    selectedTagId === null && filteredEvents.length === 0
-      ? initialEvents
-      : filteredEvents;
+  const isLoading = useAtomValue(isLoadingAtom);
 
   const cardsById = useMemo(() => {
     const m = new Map<string, ReactNode>();
@@ -38,10 +27,10 @@ export const HomeFeedGrid = ({
 
   const visibleEventIds = useMemo(
     () =>
-      effectiveEvents
+      filteredEvents
         .slice(0, HOME_VISIBLE_EVENT_CARDS)
         .map((event) => event.id),
-    [effectiveEvents],
+    [filteredEvents],
   );
 
   return isLoading ? (

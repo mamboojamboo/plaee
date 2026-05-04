@@ -33,7 +33,7 @@ export const EventDetailPage = ({
   const tradeRows = selectEventTradeRows(initialEvent.markets);
 
   return (
-    <EventDetailBootstrap initialEvent={initialEvent}>
+    <EventDetailBootstrap key={initialEvent.id} initialEvent={initialEvent}>
       <EventDetailPageShell>
         <EventDetailHeader
           meta={headerMeta}

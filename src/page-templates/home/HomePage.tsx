@@ -19,10 +19,9 @@ export const HomePage = ({
   cards,
 }: HomePageProps) => {
   return (
-    <>
-      <HomeFeedBootstrap initialEvents={initialEvents} />
+    <HomeFeedBootstrap key="home" initialEvents={initialEvents}>
       <HomeFeedFilters initialTags={initialTags} />
-      <HomeFeedGrid initialEvents={initialEvents} cards={cards} />
-    </>
+      <HomeFeedGrid cards={cards} />
+    </HomeFeedBootstrap>
   );
 };
