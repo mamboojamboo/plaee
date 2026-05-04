@@ -35,14 +35,15 @@ npm run lint   # ESLint
 
 ### Configuration and external URLs
 
-- **No `.env` file is required** — the codebase does not use `process.env`; the REST base URL is a constant in [src/shared/api/config.ts](src/shared/api/config.ts): `https://gamma-api.polymarket.com`.
+- **No project-specific `.env` file is required** for local development — the REST base URL is a constant in [src/shared/api/config.ts](src/shared/api/config.ts): `https://gamma-api.polymarket.com`.
+- The codebase does still read a couple of built-in Node runtime values: `process.env.NODE_ENV` for dev-only logging in [src/shared/api/gammaProxyNext.ts](src/shared/api/gammaProxyNext.ts), and `process.versions.node` in [src/shared/lib/websocket/client/wsClientFactory.ts](src/shared/lib/websocket/client/wsClientFactory.ts) to choose the WebSocket implementation outside the browser.
 - WebSocket (client): market — `wss://ws-subscriptions-clob.polymarket.com/ws/market`, RTDS — `wss://ws-live-data.polymarket.com` (see [src/shared/lib/websocket/channels/market.ts](src/shared/lib/websocket/channels/market.ts), [src/shared/lib/websocket/channels/rtds.ts](src/shared/lib/websocket/channels/rtds.ts)).
 
 ## Architecture
 
 ### The `app/` directory (App Router)
 
-- **[app/layout.tsx](app/layout.tsx)** — fonts, [app/globals.css](app/globals.css), [app/app-provider.tsx](app/app-provider.tsx) with the Jotai `Provider`, shared shell (`CategoryNav`, `TopProgressBar`).
+- **[app/layout.tsx](app/layout.tsx)** — fonts, [app/globals.css](app/globals.css), [app/app-provider.tsx](app/app-provider.tsx) with the Jotai `Provider`, shared shell (`CategoryNav` with the app-wide brand heading, `TopProgressBar`).
 - **Route pages (RSC)** load data through public `server` modules from features and entities, then render **page-templates**:
   - [app/page.tsx](app/page.tsx) — home;
   - [app/event/[slug]/page.tsx](app/event/[slug]/page.tsx) — event detail;
@@ -96,7 +97,7 @@ flowchart LR
   Hook --> WS
 ```
 
-Client templates ([src/page-templates/home/HomePage.tsx](src/page-templates/home/HomePage.tsx), [src/page-templates/event-detail/EventDetailBootstrap.tsx](src/page-templates/event-detail/EventDetailBootstrap.tsx)) use `useHydrateAtoms` / `useEffect` to align `eventsAtom` with server data, then enable `usePriceUpdates` (see below).
+Client bootstrap components ([src/page-templates/home/HomeFeedBootstrap.tsx](src/page-templates/home/HomeFeedBootstrap.tsx), [src/page-templates/crypto/CryptoFeedBootstrap.tsx](src/page-templates/crypto/CryptoFeedBootstrap.tsx), [src/page-templates/event-detail/EventDetailBootstrap.tsx](src/page-templates/event-detail/EventDetailBootstrap.tsx)) use `useHydrateAtoms` plus `useEffect` to align Jotai atoms with fresh server data, then enable `usePriceUpdates` (see below).
 
 ## Realtime
 
