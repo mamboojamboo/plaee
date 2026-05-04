@@ -17,11 +17,13 @@ const MultiMarketLiveRow = ({
   const firstOutcome = market.outcomes[0];
 
   return (
-    <div className="flex items-center gap-1 transition-colors">
-      <div className="flex flex-1 items-center justify-between text-sm text-display-muted">
-        <span className="truncate font-[440]">{label}</span>
+    <div className="flex min-w-0 items-center gap-2 transition-colors">
+      <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 text-sm text-display-muted">
+        <span className="truncate font-[440]" title={label}>
+          {label}
+        </span>
 
-        <span className="font-bold text-[15px]">
+        <span className="shrink-0 text-[15px] font-bold tabular-nums">
           {firstOutcome ? (
             <LiveOutcomePercent
               marketId={market.id}
@@ -34,7 +36,7 @@ const MultiMarketLiveRow = ({
         </span>
       </div>
 
-      <div className="w-21 grid grid-cols-2 gap-1">
+      <div className="grid w-21 shrink-0 grid-cols-2 gap-1">
         {market.outcomes.map((outcome, idx) => (
           <LiveOutcomeButton
             key={outcome.id}
