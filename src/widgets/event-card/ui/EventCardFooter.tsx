@@ -45,7 +45,7 @@ export const EventCardFooter = ({
   const shouldShowBookmarkIcon = Boolean(active) && !closed;
 
   return (
-    <div className="flex w-full items-center justify-between text-[13px] text-foreground-muted">
+    <div className="flex w-full items-center justify-between text-[13px] text-card-muted">
       <div className="flex min-w-0 items-center gap-2">
         {showNewBadge && <Badge name="new" />}
         {isLive && <Badge name="live" />}

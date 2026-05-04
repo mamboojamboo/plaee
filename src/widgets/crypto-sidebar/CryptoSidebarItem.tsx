@@ -16,6 +16,10 @@ export const CryptoSidebarItem = ({
   active,
   Icon,
 }: CryptoSidebarItemProps) => {
+  const metaTextClassName = active
+    ? "text-card-muted"
+    : "text-foreground-muted";
+
   return (
     <Link
       href={href}
@@ -25,9 +29,14 @@ export const CryptoSidebarItem = ({
           : "flex items-center gap-2 rounded-lg p-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-card/60 hover:text-foreground"
       }
     >
-      <Icon className="size-5 shrink-0 opacity-90 text-foreground-muted" aria-hidden />
+      <Icon
+        className={`size-5 shrink-0 opacity-90 ${metaTextClassName}`}
+        aria-hidden
+      />
       <span className="min-w-0 flex-1 truncate">{label}</span>
-      <span className="shrink-0 tabular-nums text-[13px] text-foreground-muted">
+      <span
+        className={`shrink-0 tabular-nums text-[13px] ${metaTextClassName}`}
+      >
         {count}
       </span>
     </Link>

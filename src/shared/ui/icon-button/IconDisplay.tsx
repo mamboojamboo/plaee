@@ -47,6 +47,7 @@ export const IconDisplay = ({
   className = "",
   "aria-label": ariaLabel,
 }: IconDisplayProps) => {
+  const accessibleLabel = ariaLabel?.trim();
   const iconPx = sizeIconPx[size];
   const iconEl = React.createElement(getIcon(name), {
     "aria-hidden": true,
@@ -58,8 +59,9 @@ export const IconDisplay = ({
   return (
     <span
       className={iconSurfaceClass(shape, size, className)}
-      aria-hidden={!ariaLabel}
-      aria-label={ariaLabel}
+      role={accessibleLabel ? "img" : undefined}
+      aria-hidden={accessibleLabel ? undefined : true}
+      aria-label={accessibleLabel}
     >
       {iconEl}
     </span>

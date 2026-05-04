@@ -64,7 +64,7 @@ export const ChanceIndicator = ({
             y={CHANCE_INDICATOR.LABEL_TEXT_Y}
             textAnchor="middle"
             dominantBaseline="middle"
-            className="fill-foreground-muted text-xs"
+            className="fill-card-muted text-xs"
           >
             {label}
           </text>

@@ -9,11 +9,12 @@
   --palette-border: #2a2a2a;
   --palette-fg: #f5f5f5;
   --palette-fg-muted: #7b8996;
+  --palette-card-muted: #8b9cab;
   --palette-fg-subtle: #666666;
   --palette-flash-positive: #34d399;
-  --palette-flash-negative: #ff4444;
+  --palette-flash-negative: #ff6369;
   --palette-accent-warning: #f7d022;
-  --palette-accent-live: #cb3131;
+  --palette-accent-live: #ff6369;
   --palette-display-muted: #dee3e7;
   --palette-display-heading: #e5e5e5;
   --palette-scroll-fade-mid: color-mix(in srgb, var(--palette-surface-page) 72%, var(--palette-surface-page));
@@ -24,7 +25,7 @@
   --palette-trade-yes-fg: #43c773;
   --palette-trade-yes-bg: #243a33;
   --palette-trade-yes-hover-bg: #359a5e;
-  --palette-trade-no-fg: #e03537;
+  --palette-trade-no-fg: #ff6369;
   --palette-trade-no-bg: #39272b;
   --palette-trade-no-hover-bg: #cb3131;
   --palette-indicator-track: rgb(255 255 255 / 0.1);
@@ -42,6 +43,7 @@
   --color-surface-card-hover: var(--palette-surface-card-hover);
   --color-border: var(--palette-border);
   --color-foreground-muted: var(--palette-fg-muted);
+  --color-card-muted: var(--palette-card-muted);
   --color-foreground-subtle: var(--palette-fg-subtle);
   --color-flash-positive: var(--palette-flash-positive);
   --color-flash-negative: var(--palette-flash-negative);

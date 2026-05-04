@@ -16,7 +16,7 @@ export const CryptoSidebar = ({
   const AssetIcon = assetIcon();
 
   return (
-    <aside className="hidden w-[190px] shrink-0 lg:block">
+    <aside className="hidden w-47.5 shrink-0 lg:block">
       <nav className="sticky top-16 space-y-0.5">
         <CryptoSidebarItem
           href="/crypto"
