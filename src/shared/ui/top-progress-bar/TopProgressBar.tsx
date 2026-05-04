@@ -13,7 +13,7 @@ const SAFETY_AUTO_FINISH_MS = 30_000;
 const TARGET_PROGRESS = 0.8;
 const TRICKLE_FACTOR = 0.08;
 
-export function TopProgressBar() {
+export const TopProgressBar = () => {
   const [value, setValue] = useState(0);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
@@ -161,4 +161,4 @@ export function TopProgressBar() {
       }}
     />
   );
-}
+};

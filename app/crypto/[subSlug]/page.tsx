@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import {
+  CRYPTO_SIDEBAR_PATH_SLUG_LIST,
   fetchCryptoEventsForSubSlug,
   fetchCryptoSidebarCounts,
   groupCryptoTags,
@@ -11,13 +12,17 @@ import { CryptoPage } from "@/src/page-templates/crypto";
 import { CryptoSidebar } from "@/src/widgets/crypto-sidebar";
 import { mapEventsToCardNodes } from "@/src/widgets/event-card";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 type CryptoSubPageProps = {
   params: Promise<{ subSlug: string }>;
 };
 
-export default async function CryptoSubPage({ params }: CryptoSubPageProps) {
+export const generateStaticParams = () => {
+  return CRYPTO_SIDEBAR_PATH_SLUG_LIST.map((subSlug) => ({ subSlug }));
+};
+
+export const CryptoSubPage = async ({ params }: CryptoSubPageProps) => {
   const { subSlug } = await params;
   const normalized = subSlug.trim().toLowerCase();
 
@@ -49,4 +54,6 @@ export default async function CryptoSubPage({ params }: CryptoSubPageProps) {
   }
 
   notFound();
-}
+};
+
+export default CryptoSubPage;

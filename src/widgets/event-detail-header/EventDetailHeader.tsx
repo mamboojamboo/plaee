@@ -1,7 +1,7 @@
-import React from "react";
 import Image from "next/image";
 import type { EventHeaderMeta } from "@/src/entities/event";
 import { IconDisplay } from "@/src/shared/ui/icon-button";
+import { EVENT_DETAIL_HEADER_INTL } from "./constants";
 import { TradingBoardControls } from "./TradingBoardControls";
 
 type EventDetailHeaderProps = {
@@ -9,7 +9,10 @@ type EventDetailHeaderProps = {
   timeframeLabel: string;
 };
 
-export function EventDetailHeader({ meta, timeframeLabel }: EventDetailHeaderProps) {
+export const EventDetailHeader = ({
+  meta,
+  timeframeLabel,
+}: EventDetailHeaderProps) => {
   return (
     <header className="space-y-3 border-b border-border pb-3 lg:space-y-5 lg:pb-5">
       <div className="flex items-start justify-between gap-3 lg:gap-4">
@@ -40,10 +43,22 @@ export function EventDetailHeader({ meta, timeframeLabel }: EventDetailHeaderPro
             shape="circle"
             size="md"
             iconColor="white"
-            aria-label="Open code embed"
+            aria-label={EVENT_DETAIL_HEADER_INTL.ARIA_OPEN_CODE_EMBED}
           />
-          <IconDisplay name="link" shape="circle" size="md" iconColor="white" aria-label="Copy event link" />
-          <IconDisplay name="bookmark" shape="circle" size="md" iconColor="white" aria-label="Bookmark event" />
+          <IconDisplay
+            name="link"
+            shape="circle"
+            size="md"
+            iconColor="white"
+            aria-label={EVENT_DETAIL_HEADER_INTL.ARIA_COPY_EVENT_LINK}
+          />
+          <IconDisplay
+            name="bookmark"
+            shape="circle"
+            size="md"
+            iconColor="white"
+            aria-label={EVENT_DETAIL_HEADER_INTL.ARIA_BOOKMARK_EVENT}
+          />
         </div>
       </div>
 
@@ -57,10 +72,10 @@ export function EventDetailHeader({ meta, timeframeLabel }: EventDetailHeaderPro
           {meta.volumeLabel}
         </span>
         <span className="hidden lg:inline lg:font-normal lg:text-foreground-muted">
-          {" | "}
+          {EVENT_DETAIL_HEADER_INTL.META_SEPARATOR}
           {meta.resolutionDateLabel}
         </span>
       </div>
     </header>
   );
-}
+};

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import { ClientWrapper } from "@/app/app-provider";
+import { APP_METADATA } from "@/app/constants";
 import "./globals.css";
 import { CategoryNav } from "@/src/widgets/category-nav";
 import { TopProgressBar } from "@/src/shared/ui/top-progress-bar";
@@ -16,16 +17,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Polymarket Clone - Prediction Markets",
-  description: "A modern prediction market application built with Next.js",
-};
+export const metadata: Metadata = APP_METADATA;
 
-export default function RootLayout({
+export const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html
       lang="en"
@@ -42,4 +40,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

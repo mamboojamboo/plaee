@@ -3,9 +3,9 @@ import { getMarketTags } from "@/src/features/tags-feed/server";
 import { HomePage } from "@/src/page-templates/home";
 import { mapEventsToCardNodes } from "@/src/widgets/event-card";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
-export default async function Home() {
+export const Home = async () => {
   const [initialEvents, initialTags] = await Promise.all([
     fetchEvents(),
     getMarketTags(),
@@ -24,4 +24,6 @@ export default async function Home() {
       </div>
     </main>
   );
-}
+};
+
+export default Home;

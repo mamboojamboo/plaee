@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 type PillTone = "default" | "highlight";
 
@@ -10,20 +10,20 @@ const toneClass: Record<PillTone, string> = {
 };
 
 type PillProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   tone?: PillTone;
   className?: string;
-  leftSlot?: React.ReactNode;
-  rightSlot?: React.ReactNode;
+  leftSlot?: ReactNode;
+  rightSlot?: ReactNode;
 };
 
-export function Pill({
+export const Pill = ({
   children,
   tone = "default",
   className = "",
   leftSlot,
   rightSlot,
-}: PillProps) {
+}: PillProps) => {
   return (
     <div
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium ${toneClass[tone]} ${className}`.trim()}
@@ -33,4 +33,4 @@ export function Pill({
       {rightSlot}
     </div>
   );
-}
+};

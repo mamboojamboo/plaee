@@ -10,11 +10,11 @@ type CategoryNavItemProps = {
   showTrendingIcon?: boolean;
 };
 
-export function CategoryNavItem({
+export const CategoryNavItem = ({
   href,
   label,
   showTrendingIcon = false,
-}: CategoryNavItemProps) {
+}: CategoryNavItemProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -35,4 +35,4 @@ export function CategoryNavItem({
       )}
     </Link>
   );
-}
+};

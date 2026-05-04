@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import React, { useMemo } from "react";
 import { formatPercentFromPrice } from "@/src/shared/lib/format";
 import { ChanceIndicator } from "@/src/shared/ui/chance-indicator";
 import { useOutcomePrice, usePriceUpdateFlash } from "@/src/entities/market";
@@ -12,7 +12,7 @@ export type LiveChanceIndicatorProps = {
   chanceLabel: string;
 };
 
-function LiveChanceIndicatorInner({
+export const LiveChanceIndicator = React.memo(function LiveChanceIndicator({
   marketId,
   outcomeId,
   initialPrice,
@@ -37,6 +37,4 @@ function LiveChanceIndicatorInner({
       percentTextClassName={percentTextClassName}
     />
   );
-}
-
-export const LiveChanceIndicator = memo(LiveChanceIndicatorInner);
+});

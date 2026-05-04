@@ -1,14 +1,12 @@
-import React from "react";
-
 type LoadingSkeletonProps = {
   count?: number;
   className?: string;
 };
 
-export function LoadingSkeleton({
+export const LoadingSkeleton = ({
   count = 6,
   className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4",
-}: LoadingSkeletonProps) {
+}: LoadingSkeletonProps) => {
   return (
     <div className={className}>
       {Array.from({ length: count }).map((_, i) => (
@@ -26,4 +24,4 @@ export function LoadingSkeleton({
       ))}
     </div>
   );
-}
+};

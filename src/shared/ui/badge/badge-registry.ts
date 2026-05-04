@@ -1,6 +1,7 @@
 import { Sparkle, type LucideIcon } from "lucide-react";
 import type { ComponentProps, ComponentType } from "react";
 
+import { BADGE_INTL } from "./constants";
 import { LiveRadioWithWaves } from "./LiveRadioWithWaves";
 
 export type BadgeName = "new" | "live";
@@ -22,7 +23,7 @@ type BadgeEntry = {
 
 export const badgeRegistry: Record<BadgeName, BadgeEntry> = {
   new: {
-    label: "NEW",
+    label: BADGE_INTL.NEW_LABEL,
     icon: Sparkle,
     rootClassName: "inline-flex items-center gap-1 font-semibold text-accent-warning",
     iconClassName: "shrink-0",
@@ -34,7 +35,7 @@ export const badgeRegistry: Record<BadgeName, BadgeEntry> = {
     },
   },
   live: {
-    label: "LIVE",
+    label: BADGE_INTL.LIVE_LABEL,
     icon: LiveRadioWithWaves,
     rootClassName: "inline-flex items-center gap-1 font-semibold text-accent-live",
     iconClassName: "shrink-0",

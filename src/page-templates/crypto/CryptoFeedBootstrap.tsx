@@ -1,53 +1,32 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSetAtom } from "jotai";
-import { useEffect, useMemo } from "react";
 import { useHydrateAtoms } from "jotai/utils";
+
 import type { Event } from "@/src/entities/event";
 import { eventsAtom } from "@/src/entities/event";
+import { usePriceUpdates } from "@/src/features/price-updates";
 import {
   cryptoAllCountAtom,
   cryptoCountsAtom,
   cryptoEventsAtom,
   cryptoSubSlugAtom,
-} from "./atoms";
+} from "@/src/features/crypto-feed";
 
-type UseCryptoFeedInput = {
+type CryptoFeedBootstrapProps = {
   initialEvents: Event[];
   initialCounts: Record<string, number>;
   initialAllCount: number;
   subSlug: string | null;
 };
 
-type UseCryptoFeedResult = {
-  events: Event[];
-  counts: Map<string, number>;
-  allCount: number;
-  isLoading: boolean;
-};
-
-function toCountsMap(counts: Record<string, number>): Map<string, number> {
-  const m = new Map<string, number>();
-  for (const [k, v] of Object.entries(counts)) {
-    m.set(k.toLowerCase(), v);
-  }
-  return m;
-}
-
-export function useCryptoFeed({
+export const CryptoFeedBootstrap = ({
   initialEvents,
   initialCounts,
   initialAllCount,
   subSlug,
-}: UseCryptoFeedInput): UseCryptoFeedResult {
-  const setCryptoEvents = useSetAtom(cryptoEventsAtom);
-  const setCryptoSubSlug = useSetAtom(cryptoSubSlugAtom);
-  const setCryptoCounts = useSetAtom(cryptoCountsAtom);
-  const setCryptoAllCount = useSetAtom(cryptoAllCountAtom);
-  const setEvents = useSetAtom(eventsAtom);
-
-  const isLoading = initialEvents.length === 0;
-
+}: CryptoFeedBootstrapProps) => {
   useHydrateAtoms(
     [
       [cryptoEventsAtom, initialEvents],
@@ -57,6 +36,12 @@ export function useCryptoFeed({
       [eventsAtom, initialEvents],
     ] as const,
   );
+
+  const setCryptoEvents = useSetAtom(cryptoEventsAtom);
+  const setCryptoSubSlug = useSetAtom(cryptoSubSlugAtom);
+  const setCryptoCounts = useSetAtom(cryptoCountsAtom);
+  const setCryptoAllCount = useSetAtom(cryptoAllCountAtom);
+  const setEvents = useSetAtom(eventsAtom);
 
   useEffect(() => {
     setCryptoEvents(initialEvents);
@@ -76,12 +61,7 @@ export function useCryptoFeed({
     setEvents,
   ]);
 
-  const countsMap = useMemo(() => toCountsMap(initialCounts), [initialCounts]);
+  usePriceUpdates();
 
-  return {
-    events: initialEvents,
-    counts: countsMap,
-    allCount: initialAllCount,
-    isLoading,
-  };
-}
+  return null;
+};

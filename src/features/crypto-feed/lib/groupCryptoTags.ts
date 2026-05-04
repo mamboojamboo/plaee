@@ -4,7 +4,7 @@ import {
   CRYPTO_ASSET_SLUGS,
   CRYPTO_TIMEFRAME_LABELS,
   CRYPTO_TIMEFRAME_SLUGS,
-} from "./allowlists";
+} from "../constants";
 
 function rowsForTimeframes(counts: Record<string, number>): CryptoSidebarRow[] {
   return CRYPTO_TIMEFRAME_SLUGS.map((slug) => ({

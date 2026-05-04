@@ -1,22 +1,23 @@
 /**
  * App Router segment policy for market listing and event pages.
  *
- * IMPORTANT: Each app route `page.tsx` must use the literal
- * `export const dynamic = "force-dynamic"` — Next.js statically parses route
- * segment config and rejects a shared imported constant (Turbopack build).
+ * IMPORTANT: Route segment config values such as `revalidate` must remain
+ * literal values in each `page.tsx` so Next.js can statically analyze them.
  *
- * Why force-dynamic: these routes run on every request so Server Components
- * receive up-to-date props for hydration (Jotai useHydrateAtoms, live prices).
- * This opts out of the Full Route Cache for the page shell.
+ * Current policy:
+ * - Home, crypto hub, crypto sub-routes, and event detail use short route
+ *   revalidation (`revalidate = 30`) for a fresh server snapshot.
+ * - Live prices still come from the client WebSocket layer after hydration.
  *
  * Where caching still happens:
- * - Large `Event[]` payloads: in-process TTL maps in feature modules (Next.js
- *   Data Cache / `unstable_cache` rejects entries over ~2MB).
+ * - Route output / server fetches: short ISR on the page routes.
+ * - Request-scope memoization: `react/cache` in server feature helpers avoids
+ *   duplicated work during a single render pass.
  * - Small payloads: `unstable_cache` in tags-feed/server (`tags` tag).
  * - app/api route handlers: Cache-Control s-maxage and stale-while-revalidate
  *   for CDN edge caching of JSON proxies.
  *
- * If you need ISR or static shells later: drop force-dynamic, set revalidate
- * on the segment, and verify client islands still hydrate with WebSocket UI.
+ * If a route ever needs truly request-time rendering again, prefer a targeted
+ * `connection()` / `no-store` decision over blanket dynamic rendering.
  */
 export {};

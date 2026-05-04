@@ -1,8 +1,8 @@
-import React from "react";
 import { ChevronDown, Dot } from "lucide-react";
 import { Pill } from "@/src/shared/ui/pill";
+import { EVENT_DETAIL_HEADER_INTL } from "./constants";
 
-function LiveResolutionDot() {
+export const LiveResolutionDot = () => {
   return (
     <span className="relative inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center overflow-visible">
       <span
@@ -25,17 +25,17 @@ function LiveResolutionDot() {
       />
     </span>
   );
-}
+};
 
 type TradingBoardControlsProps = {
   resolutionDateLabel: string;
   timeframeLabel: string;
 };
 
-export function TradingBoardControls({
+export const TradingBoardControls = ({
   resolutionDateLabel,
   timeframeLabel,
-}: TradingBoardControlsProps) {
+}: TradingBoardControlsProps) => {
   return (
     <div className="flex items-center gap-2 py-3 lg:gap-3 lg:py-4">
       <Pill className="px-3 py-1.5 text-sm font-normal leading-5 lg:text-[13px] lg:font-normal lg:leading-6" rightSlot={<ChevronDown size={16} className="opacity-80" />}>
@@ -47,8 +47,8 @@ export function TradingBoardControls({
         className="px-3 py-1.5 text-sm font-normal leading-5 lg:text-[13px] lg:font-normal lg:leading-6"
         leftSlot={<LiveResolutionDot />}
       >
-        12:00 AM {resolutionDateLabel}
+        {EVENT_DETAIL_HEADER_INTL.RESOLUTION_TIME_PREFIX} {resolutionDateLabel}
       </Pill>
     </div>
   );
-}
+};

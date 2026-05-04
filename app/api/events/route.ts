@@ -1,3 +1,4 @@
+import { API_PROXY_INTL, API_PROXY_LOG } from "@/app/api/constants";
 import { fetchGammaEventsListUpstream } from "@/src/entities/event/server";
 import {
   devGammaProxyLog,
@@ -9,22 +10,22 @@ import {
 export async function GET(request: Request) {
   try {
     const response = await fetchGammaEventsListUpstream(request);
-    devGammaProxyLog("[API Proxy] Response status:", response.status);
+    devGammaProxyLog(API_PROXY_LOG.EVENTS_RESPONSE_STATUS, response.status);
 
     return await gammaUpstreamToNextJson(response, GAMMA_PROXY_CACHE_EVENTS, {
       onParsed: (data) => {
         devGammaProxyLog(
-          "[API Proxy] Fetched",
+          API_PROXY_LOG.EVENTS_FETCHED,
           Array.isArray(data) ? data.length : 0,
-          "events",
+          API_PROXY_LOG.EVENTS_NOUN,
         );
       },
     });
   } catch (error) {
     return gammaProxyErrorNextResponse(
       error,
-      "Failed to fetch from Polymarket API",
-      "[API Proxy] Error:",
+      API_PROXY_INTL.FETCH_EVENTS_ERROR,
+      API_PROXY_LOG.EVENTS_ERROR,
     );
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import React, { useMemo } from "react";
 import { formatPercentFromPrice } from "@/src/shared/lib/format";
 import { useOutcomePrice, usePriceUpdateFlash } from "@/src/entities/market";
 
@@ -11,7 +11,7 @@ export type LiveOutcomePercentProps = {
   className?: string;
 };
 
-function LiveOutcomePercentInner({
+export const LiveOutcomePercent = React.memo(function LiveOutcomePercent({
   marketId,
   outcomeId,
   initialPrice,
@@ -31,6 +31,4 @@ function LiveOutcomePercentInner({
   return (
     <span className={`${flashClass} ${className}`.trim()}>{label}</span>
   );
-}
-
-export const LiveOutcomePercent = memo(LiveOutcomePercentInner);
+});

@@ -47,7 +47,7 @@ npm run lint   # ESLint
   - [app/page.tsx](app/page.tsx) — home;
   - [app/event/[slug]/page.tsx](app/event/[slug]/page.tsx) — event detail;
   - [app/crypto/page.tsx](app/crypto/page.tsx), [app/crypto/[subSlug]/page.tsx](app/crypto/[subSlug]/page.tsx) — crypto feed and sub-routes.
-- Those routes set **`export const dynamic = "force-dynamic"`** (a literal in each file — required by the Next/Turbopack parser). Rationale and where caching still applies are documented in [app/data-route-policy.ts](app/data-route-policy.ts): fresh props for hydration, no Full Route Cache for the page shell; caching via in-process TTL, `unstable_cache` for small responses, and `Cache-Control` on `app/api/*`.
+- Those routes use short **route revalidation** (`revalidate = 30`) so Server Components ship a recent snapshot for hydration while live prices continue over WebSocket. Rationale and where caching still applies are documented in [app/data-route-policy.ts](app/data-route-policy.ts): short ISR on page routes, request-scope memoization in server helpers, `unstable_cache` for small responses, and `Cache-Control` on `app/api/*`.
 - **API proxies** under [app/api/](app/api/) — thin `GET` handlers (events, pagination, slug, markets, tags) calling upstream helpers from `src/entities/event/server` and related modules; responses include CORS and `Cache-Control` for the edge (e.g. [app/api/events/route.ts](app/api/events/route.ts)).
 
 ### The `src/` directory (FSD)
@@ -118,8 +118,7 @@ The **RTDS** channel is wired in the manager for future scenarios; the main pric
 ## Limitations
 
 - **Dependence on Polymarket** — public REST and WebSocket: rate limits, outages, and API/WS contract changes are outside this repo’s control.
-- **Caching and payload size** — featured events use an in-process cache with a **30 s** TTL ([src/features/event-feed/model/cache.ts](src/features/event-feed/model/cache.ts)); large JSON lists are not stored in `unstable_cache` because of Next’s entry size limits (see [app/data-route-policy.ts](app/data-route-policy.ts)); tags use `unstable_cache` with **1 h** revalidation ([src/features/tags-feed/server.ts](src/features/tags-feed/server.ts)).
-- **`force-dynamic`** on home, event, and crypto routes — the page is not served from the full static route cache; this trades freshness of SSR props and consistent hydration.
+- **Caching and payload size** — home, crypto, and event routes use **30 s** revalidation for the server snapshot, while request-scope memoization avoids duplicate work during a single render pass; tags use `unstable_cache` with **1 h** revalidation ([src/features/tags-feed/server.ts](src/features/tags-feed/server.ts)).
 - **Not a trading venue** — the app displays prices and filters; “Buy” controls in the UI **do not** navigate to Polymarket or place orders ([TradeCtaPair](src/features/trade-cta/ui/TradeCtaPair.tsx) uses presentational `button` elements without navigation).
 - **Home grid cap** — after filtering, at most **`HOME_VISIBLE_EVENT_CARDS`** cards (**33**, [src/page-templates/home/constants/index.ts](src/page-templates/home/constants/index.ts)) are rendered; additional filtered events are not shown in the grid.
 - **WebSocket subscription scale** — concurrent `subscribeAsset` calls grow with outcomes for events present in `eventsAtom`; very large lists may stress the browser or hit upstream limits (a risk assessment, not a hard limit encoded in the app).

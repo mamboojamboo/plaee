@@ -1,3 +1,4 @@
+import { API_PROXY_INTL, API_PROXY_LOG } from "@/app/api/constants";
 import { fetchGammaEventsPaginationUpstream } from "@/src/entities/event/server";
 import {
   gammaProxyErrorNextResponse,
@@ -12,8 +13,8 @@ export async function GET(request: Request) {
   } catch (error) {
     return gammaProxyErrorNextResponse(
       error,
-      "Failed to fetch from Polymarket API",
-      "[API Pagination] Error:",
+      API_PROXY_INTL.FETCH_EVENTS_ERROR,
+      API_PROXY_LOG.PAGINATION_ERROR,
     );
   }
 }

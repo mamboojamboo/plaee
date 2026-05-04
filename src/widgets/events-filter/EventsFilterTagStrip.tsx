@@ -8,7 +8,7 @@ import {
   isNavTagSelected,
 } from "@/src/entities/tag";
 import { CATEGORY_TAGS } from "@/src/entities/category";
-import { INTL, UI } from "./constants";
+import { INTL, PINNED_TAG_SLUGS, UI } from "./constants";
 import type { EventsFilterTagStripProps } from "./types";
 
 function chipClass(active: boolean): string {
@@ -18,11 +18,9 @@ function chipClass(active: boolean): string {
   return `${UI.CHIP_BASE_CLASS} ${UI.CHIP_DEFAULT_CLASS}`;
 }
 
-const NAV_PIN_SLUGS = ["crypto", "sports", "politics"] as const;
-
 function orderNavTags(tags: Tag[]): Tag[] {
   const pinned: Tag[] = [];
-  for (const slug of NAV_PIN_SLUGS) {
+  for (const slug of PINNED_TAG_SLUGS) {
     const fromApi = tags.find((t) => tagFilterKey(t).toLowerCase() === slug);
     const fallback = CATEGORY_TAGS.find((t) => tagFilterKey(t).toLowerCase() === slug);
     const tag = fromApi ?? fallback;
@@ -33,13 +31,13 @@ function orderNavTags(tags: Tag[]): Tag[] {
   return [...pinned, ...rest];
 }
 
-export function EventsFilterTagStrip({
+export const EventsFilterTagStrip = ({
   tags,
   selectedTagId,
   onSelectTag,
   scrollContainerRef,
   isLoading,
-}: EventsFilterTagStripProps) {
+}: EventsFilterTagStripProps) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const orderedTags = useMemo(() => orderNavTags(tags), [tags]);
@@ -142,4 +140,4 @@ export function EventsFilterTagStrip({
       ) : null}
     </div>
   );
-}
+};

@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { formatPercentFromPrice } from "@/src/shared/lib/format";
 
@@ -7,16 +7,16 @@ type OutcomeTradeContentProps = {
   probability: number;
   showProbabilityOnHover?: boolean;
   label?: string;
-  livePercentNode?: React.ReactNode;
+  livePercentNode?: ReactNode;
 };
 
-export function OutcomeTradeContent({
+export const OutcomeTradeContent = ({
   name,
   probability,
   showProbabilityOnHover = false,
   label,
   livePercentNode,
-}: OutcomeTradeContentProps) {
+}: OutcomeTradeContentProps) => {
   if (showProbabilityOnHover) {
     return (
       <span className="inline-grid place-items-center">
@@ -32,4 +32,4 @@ export function OutcomeTradeContent({
   }
 
   return <>{label ?? name}</>;
-}
+};

@@ -13,12 +13,12 @@ export type EventsFilterProps = {
   isLoading: boolean;
 };
 
-export function EventsFilter({
+export const EventsFilter = ({
   tags,
   selectedTagId,
   onSelectTag,
   isLoading,
-}: EventsFilterProps) {
+}: EventsFilterProps) => {
   const stripRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -62,4 +62,4 @@ export function EventsFilter({
       </div>
     </nav>
   );
-}
+};

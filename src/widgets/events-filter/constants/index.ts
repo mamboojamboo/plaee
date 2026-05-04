@@ -8,6 +8,8 @@ export const INTL = {
   ARIA_SCROLL_RIGHT: "Scroll tags right",
 };
 
+export const PINNED_TAG_SLUGS = ["crypto", "sports", "politics"] as const;
+
 import {
   FILTER_CHIP_ACTIVE_CLASS,
   FILTER_CHIP_BASE_CLASS,

@@ -1,3 +1,4 @@
+import { API_PROXY_INTL, API_PROXY_LOG } from "@/app/api/constants";
 import { fetchGammaTagsUpstream } from "@/src/features/tags-feed/server";
 import {
   devGammaProxyLog,
@@ -9,24 +10,24 @@ import {
 export async function GET(request: Request) {
   try {
     const response = await fetchGammaTagsUpstream(request);
-    devGammaProxyLog("[Tags API Proxy] Response status:", response.status);
+    devGammaProxyLog(API_PROXY_LOG.TAGS_RESPONSE_STATUS, response.status);
 
     const type = new URL(request.url).searchParams.get("type") ?? "all";
 
     return await gammaUpstreamToNextJson(response, GAMMA_PROXY_CACHE_TAGS, {
       onParsed: (data) => {
         devGammaProxyLog(
-          "[Tags API Proxy] Fetched",
+          API_PROXY_LOG.TAGS_FETCHED,
           Array.isArray(data) ? data.length : 0,
-          `${type} tags`,
+          `${type}${API_PROXY_LOG.TAGS_SUFFIX}`,
         );
       },
     });
   } catch (error) {
     return gammaProxyErrorNextResponse(
       error,
-      "Failed to fetch from Polymarket API",
-      "[Tags API Proxy] Error:",
+      API_PROXY_INTL.FETCH_EVENTS_ERROR,
+      API_PROXY_LOG.TAGS_ERROR,
     );
   }
 }

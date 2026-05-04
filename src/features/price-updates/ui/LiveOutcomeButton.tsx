@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { memo, type MouseEventHandler } from "react";
+import React, { type MouseEventHandler } from "react";
 
 import type { Outcome } from "@/src/entities/market";
 import {
@@ -28,7 +28,7 @@ export type LiveOutcomeButtonProps = {
   className?: string;
 } & Pick<Outcome, "name">;
 
-function LiveOutcomeButtonInner({
+export const LiveOutcomeButton = React.memo(function LiveOutcomeButton({
   href,
   name,
   marketId,
@@ -83,6 +83,4 @@ function LiveOutcomeButtonInner({
       />
     </Link>
   );
-}
-
-export const LiveOutcomeButton = memo(LiveOutcomeButtonInner);
+});

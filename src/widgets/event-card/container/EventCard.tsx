@@ -1,5 +1,3 @@
-import React, { memo } from "react";
-
 import type { Event } from "@/src/entities/event";
 import { LiveChanceIndicator } from "@/src/features/price-updates";
 
@@ -30,9 +28,9 @@ export type EventCardProps = Pick<
   maxDisplayed?: number;
 };
 
-function chanceIndicatorForContent(
+const chanceIndicatorForContent = (
   content: EventCardContent,
-): React.ReactNode | undefined {
+): React.ReactNode | undefined => {
   if (content.kind !== "single") return undefined;
   const first = content.primaryMarket.outcomes[0];
   if (!first) return undefined;
@@ -44,9 +42,9 @@ function chanceIndicatorForContent(
       chanceLabel={content.chanceLabel}
     />
   );
-}
+};
 
-function EventCardInner({
+export const EventCard = ({
   markets,
   slug,
   imageUrl,
@@ -62,7 +60,7 @@ function EventCardInner({
   active,
   closed,
   maxDisplayed = 2,
-}: EventCardProps) {
+}: EventCardProps) => {
   const content = getEventCardContent({ markets }, maxDisplayed);
   if (content === null) return null;
 
@@ -91,6 +89,4 @@ function EventCardInner({
       <EventCardCenter content={content} eventSlug={slug} />
     </EventCardShell>
   );
-}
-
-export const EventCard = memo(EventCardInner);
+};

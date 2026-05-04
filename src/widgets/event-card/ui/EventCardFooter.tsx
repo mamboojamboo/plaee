@@ -1,4 +1,3 @@
-import React from "react";
 import type { Event } from "@/src/entities/event";
 import { formatVolume } from "../utils/formatVolume";
 import { getCardTagVisibility } from "../utils/getCardTagVisibility";
@@ -19,7 +18,7 @@ type EventCardFooterProps = Pick<
   | "closed"
 >;
 
-export const EventCardFooter: React.FC<EventCardFooterProps> = ({
+export const EventCardFooter = ({
   volume,
   volume24hr,
   startDate,
@@ -29,7 +28,7 @@ export const EventCardFooter: React.FC<EventCardFooterProps> = ({
   featured,
   active,
   closed,
-}) => {
+}: EventCardFooterProps) => {
   const volForFooter = Math.max(volume, volume24hr ?? 0);
   const volumeDisplay = formatVolume(volForFooter);
   const { showNew, showVol } = getCardTagVisibility({

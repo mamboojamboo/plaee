@@ -1,3 +1,3 @@
 export type { Category } from "./types";
 
-export { CATEGORY_TAGS } from "./model/constants";
+export { CATEGORY_TAGS } from "./constants";

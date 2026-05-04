@@ -1,4 +1,6 @@
-const DEFAULT_DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+import { FORMAT_INTL } from "./constants";
+
+const DEFAULT_DATE_FORMATTER = new Intl.DateTimeFormat(FORMAT_INTL.DATE_LOCALE, {
   month: "short",
   day: "numeric",
   year: "numeric",

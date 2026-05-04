@@ -7,10 +7,10 @@ type ClientWrapperProps = {
   children: ReactNode;
 };
 
-export function ClientWrapper({ children }: ClientWrapperProps) {
+export const ClientWrapper = ({ children }: ClientWrapperProps) => {
   return (
     <Provider>
       {children}
     </Provider>
   );
-}
+};

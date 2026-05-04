@@ -1,8 +1,7 @@
-import React, { memo } from "react";
-
 import type { Market } from "@/src/entities/market";
 import { LiveOutcomeButton, LiveOutcomePercent } from "@/src/features/price-updates";
 
+import { INTL } from "../constants";
 import { extractMarketLabel } from "../utils/extractMarketLabel";
 
 type MultiMarketLiveRowProps = {
@@ -10,10 +9,10 @@ type MultiMarketLiveRowProps = {
   eventSlug: string;
 };
 
-const MultiMarketLiveRow = memo(function MultiMarketLiveRow({
+const MultiMarketLiveRow = ({
   market,
   eventSlug,
-}: MultiMarketLiveRowProps) {
+}: MultiMarketLiveRowProps) => {
   const label = extractMarketLabel(market);
   const firstOutcome = market.outcomes[0];
 
@@ -30,7 +29,7 @@ const MultiMarketLiveRow = memo(function MultiMarketLiveRow({
               initialPrice={firstOutcome.price}
             />
           ) : (
-            "—"
+            INTL.EMPTY_PERCENT_PLACEHOLDER
           )}
         </span>
       </div>
@@ -52,17 +51,17 @@ const MultiMarketLiveRow = memo(function MultiMarketLiveRow({
       </div>
     </div>
   );
-});
+};
 
 type EventCardMultiMarketRowsProps = {
   markets: Market[];
   eventSlug: string;
 };
 
-export const EventCardMultiMarketRows: React.FC<EventCardMultiMarketRowsProps> = ({
+export const EventCardMultiMarketRows = ({
   markets,
   eventSlug,
-}) => {
+}: EventCardMultiMarketRowsProps) => {
   return (
     <div className="space-y-2">
       {markets.map((market) => (

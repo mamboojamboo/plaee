@@ -1,5 +1,6 @@
 import { LayoutGrid } from "lucide-react";
 import type { CryptoSidebarGroups } from "@/src/features/crypto-feed";
+import { CRYPTO_SIDEBAR_INTL } from "./constants";
 import { CryptoSidebarItem } from "./CryptoSidebarItem";
 import { assetIcon, timeframeIconForSlug } from "./icons";
 
@@ -8,7 +9,10 @@ type CryptoSidebarProps = {
   activeSubSlug: string | null;
 };
 
-export function CryptoSidebar({ groups, activeSubSlug }: CryptoSidebarProps) {
+export const CryptoSidebar = ({
+  groups,
+  activeSubSlug,
+}: CryptoSidebarProps) => {
   const AssetIcon = assetIcon();
 
   return (
@@ -16,7 +20,7 @@ export function CryptoSidebar({ groups, activeSubSlug }: CryptoSidebarProps) {
       <nav className="sticky top-16 space-y-0.5">
         <CryptoSidebarItem
           href="/crypto"
-          label="All"
+          label={CRYPTO_SIDEBAR_INTL.ALL_LABEL}
           count={groups.allCount}
           active={activeSubSlug === null}
           Icon={LayoutGrid}
@@ -54,4 +58,4 @@ export function CryptoSidebar({ groups, activeSubSlug }: CryptoSidebarProps) {
       </nav>
     </aside>
   );
-}
+};

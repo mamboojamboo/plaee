@@ -7,9 +7,9 @@ import { CryptoPage } from "@/src/page-templates/crypto";
 import { CryptoSidebar } from "@/src/widgets/crypto-sidebar";
 import { mapEventsToCardNodes } from "@/src/widgets/event-card";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
-export default async function Crypto() {
+export const Crypto = async () => {
   const [initialEvents, sidebar] = await Promise.all([
     fetchCryptoTrendingEvents(),
     fetchCryptoSidebarCounts(),
@@ -30,4 +30,6 @@ export default async function Crypto() {
       />
     </main>
   );
-}
+};
+
+export default Crypto;

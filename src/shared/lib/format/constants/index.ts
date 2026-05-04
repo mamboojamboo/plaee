@@ -1,0 +1,8 @@
+export const FORMAT_INTL = {
+  DATE_LOCALE: "en-US",
+  UNAVAILABLE_CENTS: "—¢",
+  UNAVAILABLE_PERCENT: "—",
+  LESS_THAN_ONE_PERCENT: "<1%",
+  FULL_PERCENT: "100%",
+  VOLUME_SUFFIX: "Vol.",
+};

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CHANCE_INDICATOR, CHANCE_INDICATOR_ARC_LENGTH } from "./constants";
 import { getIndicatorColorClass } from "./getIndicatorColorClass";
 
@@ -10,12 +8,12 @@ type ChanceIndicatorProps = {
   percentLabel?: string;
 };
 
-export const ChanceIndicator: React.FC<ChanceIndicatorProps> = ({
+export const ChanceIndicator = ({
   probability,
   label = "",
   percentTextClassName = "",
   percentLabel,
-}) => {
+}: ChanceIndicatorProps) => {
   const normalized =
     probability >= 99.5 ? 1 : probability <= 0.5 ? 0 : probability / 100;
 

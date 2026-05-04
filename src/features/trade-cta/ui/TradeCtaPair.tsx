@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
 import type { Outcome } from "@/src/entities/market";
 import { useOutcomePrice, usePriceUpdateFlash } from "@/src/entities/market";
 import { formatCents } from "@/src/shared/lib/format";
 import { OutcomeTradeContent, outcomeTradeSurfaceClasses } from "@/src/shared/ui/outcome-trade";
+import { TRADE_CTA_INTL } from "../constants";
 
 type TradeCtaPairProps = {
   eventSlug: string;
@@ -13,7 +13,7 @@ type TradeCtaPairProps = {
   noOutcome: Outcome;
 };
 
-export function TradeCtaPair(props: TradeCtaPairProps) {
+export const TradeCtaPair = (props: TradeCtaPairProps) => {
   const { marketId, yesOutcome, noOutcome } = props;
 
   const yesPrice = useOutcomePrice(marketId, yesOutcome.id, yesOutcome.price);
@@ -36,12 +36,12 @@ export function TradeCtaPair(props: TradeCtaPairProps) {
           className:
             "h-12 max-lg:text-base max-lg:leading-normal lg:text-sm lg:leading-6",
         })}`}
-        aria-label={`Buy ${yesOutcome.name} ${formatCents(yesPrice)}`}
+        aria-label={`${TRADE_CTA_INTL.BUY_PREFIX} ${yesOutcome.name} ${formatCents(yesPrice)}`}
       >
         <OutcomeTradeContent
           name={yesOutcome.name}
           probability={yesPrice * 100}
-          label={`Buy ${yesOutcome.name} ${formatCents(yesPrice)}`}
+          label={`${TRADE_CTA_INTL.BUY_PREFIX} ${yesOutcome.name} ${formatCents(yesPrice)}`}
         />
       </button>
       <button
@@ -53,14 +53,14 @@ export function TradeCtaPair(props: TradeCtaPairProps) {
           className:
             "h-12 max-lg:text-base max-lg:leading-normal lg:text-sm lg:leading-6",
         })}`}
-        aria-label={`Buy ${noOutcome.name} ${formatCents(noPrice)}`}
+        aria-label={`${TRADE_CTA_INTL.BUY_PREFIX} ${noOutcome.name} ${formatCents(noPrice)}`}
       >
         <OutcomeTradeContent
           name={noOutcome.name}
           probability={noPrice * 100}
-          label={`Buy ${noOutcome.name} ${formatCents(noPrice)}`}
+          label={`${TRADE_CTA_INTL.BUY_PREFIX} ${noOutcome.name} ${formatCents(noPrice)}`}
         />
       </button>
     </div>
   );
-}
+};

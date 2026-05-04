@@ -39,14 +39,14 @@ export type IconDisplayProps = {
   "aria-label"?: string;
 };
 
-export const IconDisplay: React.FC<IconDisplayProps> = ({
+export const IconDisplay = ({
   name,
   shape,
   size = "sm",
   iconColor,
   className = "",
   "aria-label": ariaLabel,
-}) => {
+}: IconDisplayProps) => {
   const iconPx = sizeIconPx[size];
   const iconEl = React.createElement(getIcon(name), {
     "aria-hidden": true,

@@ -1,5 +1,3 @@
-import React from "react";
-
 const RADIO_PATHS = [
   "M16.247 7.761a6 6 0 0 1 0 8.478",
   "M19.075 4.933a10 10 0 0 1 0 14.134",
@@ -13,11 +11,11 @@ type LiveRadioWithWavesProps = {
   "aria-hidden"?: boolean;
 };
 
-export const LiveRadioWithWaves: React.FC<LiveRadioWithWavesProps> = ({
+export const LiveRadioWithWaves = ({
   size = 24,
   className = "",
   "aria-hidden": ariaHidden = true,
-}) => {
+}: LiveRadioWithWavesProps) => {
   const dim = size ?? 24;
 
   return (

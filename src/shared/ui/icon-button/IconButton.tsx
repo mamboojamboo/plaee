@@ -24,7 +24,7 @@ type IconButtonProps = {
   "aria-label"?: string;
 };
 
-export const IconButton: React.FC<IconButtonProps> = ({
+export const IconButton = ({
   name,
   shape,
   size = "sm",
@@ -32,7 +32,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   onClick,
   className = "",
   "aria-label": ariaLabel,
-}) => {
+}: IconButtonProps) => {
   if (!onClick) {
     return (
       <IconDisplay

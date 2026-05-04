@@ -1,67 +1,53 @@
-import { type ReactNode } from "react";
+import { notFound } from "next/navigation";
 import {
   type Event,
   selectEventHeaderMeta,
   selectEventTradeRows,
 } from "@/src/entities/event";
-import { TradeCtaPair } from "@/src/features/trade-cta";
 import { EventDetailHeader } from "@/src/widgets/event-detail-header";
 import { EventDetailTradingBoard } from "@/src/widgets/event-detail-trading-board";
 
 import { EventDetailBootstrap } from "./EventDetailBootstrap";
+import { EVENT_DETAIL_INTL } from "./constants";
 import {
   EventDetailEmptyState,
-  EventDetailNotFoundState,
   EventDetailPageShell,
 } from "./EventDetailStates";
 
 type EventDetailPageProps = {
   slug: string;
-  initialEvent: Event | null;
+  initialEvent: Event;
 };
 
-const TIMEFRAME_LABEL = "Past";
-
-export function EventDetailPage({ slug, initialEvent }: EventDetailPageProps) {
-  if (!initialEvent) {
-    return <EventDetailNotFoundState />;
-  }
-
+export const EventDetailPage = ({
+  slug,
+  initialEvent,
+}: EventDetailPageProps) => {
   const eventMatchesSlug =
     initialEvent.slug === slug || initialEvent.id === slug;
   if (!eventMatchesSlug) {
-    return <EventDetailNotFoundState />;
+    notFound();
   }
 
   const headerMeta = selectEventHeaderMeta(initialEvent);
   const tradeRows = selectEventTradeRows(initialEvent.markets);
-  const eventSlug = initialEvent.slug;
-
-  const rowsWithActions: Array<{
-    row: (typeof tradeRows)[number];
-    actions: ReactNode;
-  }> = tradeRows.map((row) => ({
-    row,
-    actions: (
-      <TradeCtaPair
-        eventSlug={eventSlug}
-        marketId={row.id}
-        yesOutcome={row.yesOutcome}
-        noOutcome={row.noOutcome}
-      />
-    ),
-  }));
 
   return (
     <EventDetailBootstrap initialEvent={initialEvent}>
       <EventDetailPageShell>
-        <EventDetailHeader meta={headerMeta} timeframeLabel={TIMEFRAME_LABEL} />
-        {rowsWithActions.length > 0 ? (
-          <EventDetailTradingBoard rows={rowsWithActions} />
+        <EventDetailHeader
+          meta={headerMeta}
+          timeframeLabel={EVENT_DETAIL_INTL.TIMEFRAME_LABEL_PAST}
+        />
+        {tradeRows.length > 0 ? (
+          <EventDetailTradingBoard
+            rows={tradeRows}
+            eventSlug={initialEvent.slug}
+          />
         ) : (
           <EventDetailEmptyState />
         )}
       </EventDetailPageShell>
     </EventDetailBootstrap>
   );
-}
+};

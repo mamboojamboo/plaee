@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { API_PROXY_INTL, API_PROXY_LOG } from "@/app/api/constants";
 import { fetchGammaEventBySlugUpstream } from "@/src/entities/event/server";
 import {
   gammaProxyErrorNextResponse,
@@ -17,15 +18,18 @@ export async function GET(_request: Request, context: RouteContext) {
     const response = await fetchGammaEventBySlugUpstream(slug);
 
     if (response.status === 404) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: API_PROXY_INTL.EVENT_NOT_FOUND },
+        { status: 404 },
+      );
     }
 
     return await gammaUpstreamToNextJson(response, GAMMA_PROXY_CACHE_EVENTS);
   } catch (error) {
     return gammaProxyErrorNextResponse(
       error,
-      "Failed to fetch event from Polymarket API",
-      "[API Proxy] Event slug error:",
+      API_PROXY_INTL.FETCH_EVENT_ERROR,
+      API_PROXY_LOG.EVENT_SLUG_ERROR,
     );
   }
 }

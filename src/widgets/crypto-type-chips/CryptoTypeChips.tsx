@@ -3,6 +3,7 @@
 import { useAtom } from "jotai";
 import { cryptoTypeChipAtom } from "@/src/features/crypto-feed";
 import { filterChipClass } from "@/src/shared/ui/filter-chip";
+import { CRYPTO_TYPE_CHIPS_INTL } from "./constants";
 
 export type CryptoTypeChipDef = {
   slug: string;
@@ -13,7 +14,7 @@ type CryptoTypeChipsProps = {
   chips: CryptoTypeChipDef[];
 };
 
-export function CryptoTypeChips({ chips }: CryptoTypeChipsProps) {
+export const CryptoTypeChips = ({ chips }: CryptoTypeChipsProps) => {
   const [typeChip, setTypeChip] = useAtom(cryptoTypeChipAtom);
 
   return (
@@ -24,7 +25,7 @@ export function CryptoTypeChips({ chips }: CryptoTypeChipsProps) {
         aria-pressed={typeChip === null}
         onClick={() => setTypeChip(null)}
       >
-        All
+        {CRYPTO_TYPE_CHIPS_INTL.ALL_LABEL}
       </button>
       {chips.map((chip) => {
         const active =
@@ -44,4 +45,4 @@ export function CryptoTypeChips({ chips }: CryptoTypeChipsProps) {
       })}
     </div>
   );
-}
+};

@@ -1,19 +1,12 @@
-"use client";
+import { type ReactNode } from "react";
 
-import { useMemo, type ReactNode } from "react";
-
-import { useCryptoFeed, useCryptoTypeFilteredEvents } from "@/src/features/crypto-feed";
-import { usePriceUpdates } from "@/src/features/price-updates";
 import type { Event } from "@/src/entities/event";
-import { CryptoTypeChips } from "@/src/widgets/crypto-type-chips";
 import { IconDisplay } from "@/src/shared/ui/icon-button";
-import { LoadingSkeleton } from "@/src/shared/ui/loading-skeleton";
+import { CryptoTypeChips } from "@/src/widgets/crypto-type-chips";
 
-import {
-  CRYPTO_INTL,
-  CRYPTO_TYPE_CHIP_DEFS,
-  CRYPTO_VISIBLE_EVENT_CARDS,
-} from "./constants";
+import { CryptoFeedBootstrap } from "./CryptoFeedBootstrap";
+import { CryptoFeedGrid } from "./CryptoFeedGrid";
+import { CRYPTO_INTL, CRYPTO_TYPE_CHIP_DEFS } from "./constants";
 
 type CryptoPageProps = {
   initialEvents: Event[];
@@ -24,41 +17,22 @@ type CryptoPageProps = {
   cards: Array<{ id: string; node: ReactNode }>;
 };
 
-export function CryptoPage({
+export const CryptoPage = ({
   initialEvents,
   initialCounts,
   initialAllCount,
   subSlug,
   sidebar,
   cards,
-}: CryptoPageProps) {
-  const { events, isLoading } = useCryptoFeed({
-    initialEvents,
-    initialCounts,
-    initialAllCount,
-    subSlug,
-  });
-
-  usePriceUpdates();
-
-  const typeFilteredEvents = useCryptoTypeFilteredEvents(events);
-
-  const cardsById = useMemo(() => {
-    const m = new Map<string, ReactNode>();
-    for (const c of cards) m.set(c.id, c.node);
-    return m;
-  }, [cards]);
-
-  const visibleEventIds = useMemo(
-    () =>
-      typeFilteredEvents
-        .slice(0, CRYPTO_VISIBLE_EVENT_CARDS)
-        .map((event) => event.id),
-    [typeFilteredEvents],
-  );
-
+}: CryptoPageProps) => {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr]">
+      <CryptoFeedBootstrap
+        initialEvents={initialEvents}
+        initialCounts={initialCounts}
+        initialAllCount={initialAllCount}
+        subSlug={subSlug}
+      />
       {sidebar}
 
       <div className="flex min-w-0 flex-col gap-4">
@@ -87,20 +61,8 @@ export function CryptoPage({
           </div>
         </header>
 
-        {isLoading ? (
-          <LoadingSkeleton count={6} />
-        ) : visibleEventIds.length > 0 ? (
-          <div className="grid auto-rows-[180px] grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {visibleEventIds.map((id) => cardsById.get(id) ?? null)}
-          </div>
-        ) : (
-          <div className="py-12 text-center">
-            <p className="text-lg text-foreground-muted">
-              {CRYPTO_INTL.NO_MARKETS_FOUND}
-            </p>
-          </div>
-        )}
+        <CryptoFeedGrid initialEvents={initialEvents} cards={cards} />
       </div>
     </div>
   );
-}
+};

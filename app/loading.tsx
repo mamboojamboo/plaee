@@ -3,7 +3,7 @@ import { LoadingSkeleton } from "@/src/shared/ui/loading-skeleton";
 const HOME_EVENT_GRID_CLASS =
   "grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-[180px]";
 
-export default function HomeLoading() {
+export const HomeLoading = () => {
   return (
     <main className="min-h-screen bg-background">
       <div className="flex flex-col gap-4">
@@ -31,4 +31,6 @@ export default function HomeLoading() {
       </div>
     </main>
   );
-}
+};
+
+export default HomeLoading;

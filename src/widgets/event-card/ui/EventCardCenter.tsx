@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LiveOutcomeButton } from "@/src/features/price-updates";
 import type { EventCardContent } from "../utils/getEventCardContent";
 import { EventCardMultiMarketRows } from "./EventCardMultiMarketRows";
@@ -9,7 +7,10 @@ type EventCardCenterProps = {
   eventSlug: string;
 };
 
-export function EventCardCenter({ content, eventSlug }: EventCardCenterProps) {
+export const EventCardCenter = ({
+  content,
+  eventSlug,
+}: EventCardCenterProps) => {
   switch (content.kind) {
     case "single":
       return (
@@ -39,4 +40,4 @@ export function EventCardCenter({ content, eventSlug }: EventCardCenterProps) {
       return _exhaustive;
     }
   }
-}
+};

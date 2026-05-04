@@ -1,5 +1,3 @@
-import React from "react";
-
 import type { Event } from "@/src/entities/event";
 
 import { EventCardFooter } from "./EventCardFooter";
@@ -25,7 +23,7 @@ type EventCardShellProps = Pick<
   children: React.ReactNode;
 };
 
-export function EventCardShell({
+export const EventCardShell = ({
   slug,
   imageUrl,
   headline,
@@ -41,7 +39,7 @@ export function EventCardShell({
   closed,
   chanceIndicator,
   children,
-}: EventCardShellProps) {
+}: EventCardShellProps) => {
   return (
     <div className="h-full bg-surface-card rounded-event-card pt-3 pr-3 pb-2 pl-3 overflow-hidden transition-[transform,background-color] duration-200 ease-out hover:-translate-y-px hover:bg-surface-card-hover">
       <div className="flex h-full flex-col justify-between gap-2">
@@ -70,4 +68,4 @@ export function EventCardShell({
       </div>
     </div>
   );
-}
+};

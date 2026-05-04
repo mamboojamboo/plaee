@@ -1,5 +1,3 @@
-import React from "react";
-
 import type { BadgeName } from "./badge-registry";
 import { badgeRegistry } from "./badge-registry";
 
@@ -8,7 +6,7 @@ type BadgeProps = {
   className?: string;
 };
 
-export const Badge: React.FC<BadgeProps> = ({ name, className = "" }) => {
+export const Badge = ({ name, className = "" }: BadgeProps) => {
   const def = badgeRegistry[name];
   const Icon = def.icon;
 

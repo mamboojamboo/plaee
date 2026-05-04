@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Event } from "@/src/entities/event";
@@ -9,13 +8,13 @@ type EventCardHeaderProps = Pick<Event, "imageUrl" | "slug"> & {
   chanceIndicator?: React.ReactNode;
 };
 
-export const EventCardHeader: React.FC<EventCardHeaderProps> = ({
+export const EventCardHeader = ({
   imageUrl,
   headline,
   fullTitle,
   slug,
   chanceIndicator,
-}) => {
+}: EventCardHeaderProps) => {
   return (
     <div className="flex items-start gap-2">
       {imageUrl && (

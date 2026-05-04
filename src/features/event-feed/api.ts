@@ -1,20 +1,12 @@
 import "server-only";
 
+import { cache } from "react";
+
 import type { Event } from "@/src/entities/event";
 import { getFeaturedEvents } from "@/src/entities/event/server";
-import { featuredEventsCache } from "./model/cache";
 
-export async function fetchEvents(
-  forceRefresh: boolean = false,
-): Promise<Event[]> {
-  const now = Date.now();
+const fetchEventsCached = cache(async (): Promise<Event[]> => getFeaturedEvents());
 
-  if (!forceRefresh) {
-    const cached = featuredEventsCache.get(now);
-    if (cached) return cached;
-  }
-
-  const events = await getFeaturedEvents();
-  featuredEventsCache.set(events, now);
-  return events;
+export async function fetchEvents(): Promise<Event[]> {
+  return fetchEventsCached();
 }

@@ -1,6 +1,8 @@
 import type { Event } from "../types";
 import type { Market, Outcome } from "@/src/entities/market";
+import { EVENT_INTL } from "../constants";
 import {
+  FORMAT_INTL,
   formatEventDate,
   formatMoneyCompact,
   formatVolumeLabel,
@@ -32,7 +34,7 @@ function getPrimaryOutcomes(market: Market): { yesOutcome: Outcome; noOutcome: O
 
 export function selectEventHeaderMeta(event: Event): EventHeaderMeta {
   return {
-    categoryLabel: event.tags[0]?.label ?? "Market",
+    categoryLabel: event.tags[0]?.label ?? EVENT_INTL.DEFAULT_CATEGORY_LABEL,
     title: event.title,
     volumeLabel: formatVolumeLabel(event.volume),
     resolutionDateLabel: formatEventDate(event.resolutionDate),
@@ -51,7 +53,7 @@ export function selectEventTradeRows(markets: Market[]): EventTradeRow[] {
       return {
         id: market.id,
         label: market.groupItemTitle || market.question,
-        volumeLabel: `${formatMoneyCompact(leftValue)} Vol.`,
+        volumeLabel: `${formatMoneyCompact(leftValue)} ${FORMAT_INTL.VOLUME_SUFFIX}`,
         yesOutcome: outcomes.yesOutcome,
         noOutcome: outcomes.noOutcome,
       };

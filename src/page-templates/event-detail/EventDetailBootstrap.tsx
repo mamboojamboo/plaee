@@ -12,15 +12,15 @@ import {
 import { usePriceUpdates } from "@/src/features/price-updates";
 
 type EventDetailBootstrapProps = {
-  initialEvent: Event | null;
+  initialEvent: Event;
   children: ReactNode;
 };
 
-export function EventDetailBootstrap({
+export const EventDetailBootstrap = ({
   initialEvent,
   children,
-}: EventDetailBootstrapProps) {
-  const hydratedEvents = initialEvent ? [initialEvent] : [];
+}: EventDetailBootstrapProps) => {
+  const hydratedEvents: Event[] = [initialEvent];
 
   useHydrateAtoms(
     [
@@ -33,15 +33,11 @@ export function EventDetailBootstrap({
   const setIsLoading = useSetAtom(isLoadingAtom);
 
   useEffect(() => {
-    if (initialEvent) {
-      setEvents([initialEvent]);
-    } else {
-      setEvents([]);
-    }
+    setEvents([initialEvent]);
     setIsLoading(false);
   }, [initialEvent, setEvents, setIsLoading]);
 
   usePriceUpdates();
 
   return <>{children}</>;
-}
+};

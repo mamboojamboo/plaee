@@ -9,13 +9,13 @@ type CryptoSidebarItemProps = {
   Icon: LucideIcon;
 };
 
-export function CryptoSidebarItem({
+export const CryptoSidebarItem = ({
   href,
   label,
   count,
   active,
   Icon,
-}: CryptoSidebarItemProps) {
+}: CryptoSidebarItemProps) => {
   return (
     <Link
       href={href}
@@ -32,4 +32,4 @@ export function CryptoSidebarItem({
       </span>
     </Link>
   );
-}
+};
