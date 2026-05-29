@@ -1,4 +1,4 @@
-# plaee — Polymarket prediction markets UI
+# Polymarket prediction markets UI
 
 A client application built with **Next.js 16**, **React 19**, **Jotai**, and **Tailwind CSS 4**: an event feed backed by Polymarket’s Gamma API, tag filters, a crypto section, and **live price updates** over the CLOB WebSocket. The codebase follows **Feature-Sliced Design** under `src/`.
 
